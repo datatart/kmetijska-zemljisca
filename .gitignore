@@ -10,7 +10,46 @@ ENV/
 
 # Data files (we'll generate these via Actions)
 data/training_html/
+data/ocr_texts/
+data/detail_page_samples/
 *.pdf
+*.db
+
+# Historical/legacy data files
+data/agricultural_offers_dataset.json
+data/agricultural_offers_enriched.json
+data/enhanced_extraction.json
+data/extracted_data*.json
+data/improved_ocr_extraction.json
+data/classification_results.json
+data/dataset_summary.json
+data/detail_pages_analysis.json
+data/improved_ko_parsing_results.json
+data/ko_parsing_strategy_results.json
+data/location_matches.json
+data/missing_ko_analysis.json
+data/new_offers.json
+data/ocr_parser_report.md
+
+# Historical documentation
+DASHBOARD.md
+DATABASE.md
+DATABASE_QUICKSTART.md
+IMPLEMENTATION_SUMMARY.md
+PDF_PARSING_SUMMARY.md
+PROGRESS.md
+QUICKSTART.md
+
+# Historical scripts
+agricultural_offers_dashboard.html
+dashboard.html
+add_ko_centroids.py
+analyze_*.py
+check_rss_url.py
+classify_and_process_auctions.py
+compare_extractors.py
+create_fresh_dataset.py
+create_training_dataset.py
 
 # IDE
 .vscode/

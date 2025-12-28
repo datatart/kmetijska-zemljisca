@@ -31,6 +31,22 @@ def generate_dashboard():
     offers = data['offers']
     now = datetime.now()
 
+    # Load extraction results (OCR data)
+    extraction_file = Path("data/extraction_results.json")
+    extractions = {}
+    if extraction_file.exists():
+        with open(extraction_file, 'r', encoding='utf-8') as f:
+            extraction_data = json.load(f)
+            extractions = extraction_data.get('extractions', {})
+
+    # Load parcel geometries (for area calculation)
+    geometry_file = Path("data/parcel_geometries.json")
+    geometries = {}
+    if geometry_file.exists():
+        with open(geometry_file, 'r', encoding='utf-8') as f:
+            geometry_data = json.load(f)
+            geometries = geometry_data.get('geometries', {})
+
     # Calculate statistics
     active_count = 0
     for offer in offers:
@@ -41,6 +57,7 @@ def generate_dashboard():
 
     # Calculate statistics
     offers_with_ko = sum(1 for offer in offers if offer.get('ko_code'))
+    offers_with_price = sum(1 for offer in offers if str(offer['id']) in extractions and extractions[str(offer['id'])].get('total_price'))
 
     html = f'''<!DOCTYPE html>
 <html lang="sl">
@@ -84,10 +101,10 @@ def generate_dashboard():
                     <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-green-100 text-sm font-medium">Zadnja posodobitev</p>
-                                <p class="text-lg font-bold text-white mt-2">{datetime.now().strftime("%d. %m. %Y")}</p>
+                                <p class="text-green-100 text-sm font-medium">S podatki o ceni</p>
+                                <p class="text-3xl font-bold text-white mt-2">{offers_with_price}</p>
                             </div>
-                            <div class="text-4xl">🕐</div>
+                            <div class="text-4xl">💰</div>
                         </div>
                     </div>
                 </div>
@@ -161,6 +178,9 @@ def generate_dashboard():
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Številka dokumenta</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Upravna enota</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Katastrska občina</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cena</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Površina</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parcele</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Objavljeno</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Veljavno do</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Povezave</th>
@@ -204,6 +224,50 @@ def generate_dashboard():
         # Create searchable UE text (without "Upravna enota" prefix)
         ue_search = institution.replace('Upravna enota ', '').lower() if institution else ""
 
+        # Get extraction data for this offer
+        extraction = extractions.get(str(offer_id), {})
+
+        # Format price
+        total_price = extraction.get('total_price')
+        if total_price:
+            price_display = f"€{total_price:,.2f}"
+        else:
+            price_display = "-"
+
+        # Calculate total area from parcel geometries
+        plots = extraction.get('plots', [])
+        total_area_m2 = 0
+        parcels_with_area = 0
+
+        for plot in plots:
+            parcel_id = plot.get('parcel_id', '')
+            # Try to find geometry (format: "KO_CODE/PARCEL_ID")
+            if ko_code and parcel_id:
+                geom_key = f"{ko_code}/{parcel_id}"
+                geom_data = geometries.get(geom_key, {})
+                area = geom_data.get('area_m2')
+                if area:
+                    total_area_m2 += area
+                    parcels_with_area += 1
+
+        # Format area display
+        if total_area_m2 > 0:
+            # Convert to hectares if > 10,000 m²
+            if total_area_m2 >= 10000:
+                area_ha = total_area_m2 / 10000
+                area_display = f"{area_ha:,.2f} ha"
+            else:
+                area_display = f"{total_area_m2:,.0f} m²"
+        else:
+            area_display = "-"
+
+        # Format parcel count
+        num_parcels = len(plots)
+        if num_parcels > 0:
+            parcels_display = str(num_parcels)
+        else:
+            parcels_display = "-"
+
         html += f'''
                             <tr class="offer-row" data-notice="{notice_num.lower()}" data-ko="{ko_code}" data-ko-search="{ko_search}" data-ue-search="{ue_search}" data-institution="{institution}">
                                 <td class="px-4 py-3 text-sm text-gray-900">{idx}</td>
@@ -214,6 +278,9 @@ def generate_dashboard():
                                 </td>
                                 <td class="px-4 py-3 text-sm text-gray-600">{institution_display}</td>
                                 <td class="px-4 py-3 text-sm text-gray-600">{ko_display}</td>
+                                <td class="px-4 py-3 text-sm font-medium text-gray-900">{price_display}</td>
+                                <td class="px-4 py-3 text-sm text-gray-600">{area_display}</td>
+                                <td class="px-4 py-3 text-sm text-gray-600">{parcels_display}</td>
                                 <td class="px-4 py-3 text-sm text-gray-600">{published}</td>
                                 <td class="px-4 py-3 text-sm text-gray-600">{valid_until}</td>
                                 <td class="px-4 py-3 text-sm">

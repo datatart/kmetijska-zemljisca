@@ -34,14 +34,23 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: uv pip install --system requests beautifulsoup4 lxml
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-slv poppler-utils
+
+      - name: Install Python dependencies
+        run: uv pip install --system requests beautifulsoup4 lxml pytesseract pdf2image Pillow
 
       - name: Create data directory
         run: mkdir -p data
 
       - name: Scrape fresh data
         run: python scrape_fresh_dashboard.py
+
+      - name: Process new offers with OCR
+        run: python process_new_offers.py
+        continue-on-error: true
 
       - name: Generate dashboard
         run: python generate_fresh_dashboard.py
@@ -56,5 +65,5 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git add index.html fresh_agricultural_dashboard.html data/fresh_agricultural_offers.json
+          git add index.html fresh_agricultural_dashboard.html data/fresh_agricultural_offers.json data/extraction_results.json data/processed_offers.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Update dashboard data - $(date +'%Y-%m-%d %H:%M:%S')" && git pull --rebase origin main && git push)
