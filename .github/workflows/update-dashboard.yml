@@ -57,4 +57,4 @@ jobs:
       - name: Commit and push changes
         run: |
           git add index.html fresh_agricultural_dashboard.html data/fresh_agricultural_offers.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Update dashboard data - $(date +'%Y-%m-%d %H:%M:%S')" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Update dashboard data - $(date +'%Y-%m-%d %H:%M:%S')" && git pull --rebase origin main && git push)
