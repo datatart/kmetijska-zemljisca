@@ -1,0 +1,19 @@
+[project]
+name = "obcinski-razpisi"
+version = "1.0.0"
+description = "Samodejno posodobljen pregled ponudb za kmetijska zemljišča iz e-Uprava oglasne deske"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31.0",
+    "beautifulsoup4>=4.12.0",
+    "lxml>=5.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

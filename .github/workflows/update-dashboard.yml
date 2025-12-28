@@ -1,0 +1,60 @@
+name: Update Dashboard
+
+on:
+  schedule:
+    # Run every day at 6:00 AM UTC (7:00 AM CET, 8:00 AM CEST)
+    - cron: '0 6 * * *'
+  workflow_dispatch:  # Allow manual trigger
+  push:
+    branches:
+      - main
+    paths:
+      - 'scrape_fresh_dashboard.py'
+      - 'generate_fresh_dashboard.py'
+      - '.github/workflows/update-dashboard.yml'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: uv pip install --system requests beautifulsoup4 lxml
+
+      - name: Create data directory
+        run: mkdir -p data
+
+      - name: Scrape fresh data
+        run: python scrape_fresh_dashboard.py
+
+      - name: Generate dashboard
+        run: python generate_fresh_dashboard.py
+
+      - name: Copy to index.html for hosting
+        run: cp fresh_agricultural_dashboard.html index.html
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: Commit and push changes
+        run: |
+          git add index.html fresh_agricultural_dashboard.html data/fresh_agricultural_offers.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Update dashboard data - $(date +'%Y-%m-%d %H:%M:%S')" && git push)
