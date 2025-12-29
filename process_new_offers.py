@@ -67,24 +67,47 @@ def save_extraction_results(results):
         json.dump(results, f, indent=2, ensure_ascii=False)
 
 
-def download_pdf(pdf_url, offer_id):
-    """Download PDF to temporary location"""
-    try:
-        print(f"   Downloading PDF for {offer_id}...", end=' ')
-        response = requests.get(pdf_url, timeout=30)
-        response.raise_for_status()
+def download_pdf(pdf_url, offer_id, max_retries=3):
+    """Download PDF to temporary location with retry logic"""
+    for attempt in range(max_retries):
+        try:
+            if attempt > 0:
+                wait_time = 2 ** attempt  # Exponential backoff: 2, 4, 8 seconds
+                print(f"   Retry {attempt}/{max_retries} after {wait_time}s...", end=' ')
+                time.sleep(wait_time)
+            else:
+                print(f"   Downloading PDF for {offer_id}...", end=' ')
 
-        # Save to temporary file
-        pdf_path = Path(tempfile.gettempdir()) / f"{offer_id}.pdf"
-        with open(pdf_path, 'wb') as f:
-            f.write(response.content)
+            response = requests.get(pdf_url, timeout=30)
+            response.raise_for_status()
 
-        print(f"✓ ({len(response.content) / 1024:.1f} KB)")
-        return pdf_path
+            # Save to temporary file
+            pdf_path = Path(tempfile.gettempdir()) / f"{offer_id}.pdf"
+            with open(pdf_path, 'wb') as f:
+                f.write(response.content)
 
-    except Exception as e:
-        print(f"✗ Error: {e}")
-        return None
+            print(f"✓ ({len(response.content) / 1024:.1f} KB)")
+            return pdf_path
+
+        except requests.exceptions.ConnectionError as e:
+            if attempt < max_retries - 1:
+                print(f"✗ Connection error, retrying...")
+                continue
+            else:
+                print(f"✗ Failed after {max_retries} attempts (Connection error)")
+                return None
+        except requests.exceptions.Timeout as e:
+            if attempt < max_retries - 1:
+                print(f"✗ Timeout, retrying...")
+                continue
+            else:
+                print(f"✗ Failed after {max_retries} attempts (Timeout)")
+                return None
+        except Exception as e:
+            print(f"✗ Error: {e}")
+            return None
+
+    return None
 
 
 def ocr_pdf(pdf_path, offer_id):
@@ -252,6 +275,10 @@ def process_new_offers():
             # Clean up temporary PDF
             if pdf_path and pdf_path.exists():
                 pdf_path.unlink()
+
+        # Add delay between offers to avoid overwhelming the server
+        if idx < len(new_ids):
+            time.sleep(2)  # 2 second delay between offers
 
     # Step 6: Save updated data
     print(f"\n💾 Saving results...")
