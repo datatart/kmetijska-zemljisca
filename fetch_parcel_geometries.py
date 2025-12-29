@@ -38,42 +38,42 @@ def save_geometries(geometries_data):
 
 def fetch_parcel_geometry(ko_code, parcel_id):
     """
-    Fetch parcel geometry from GURS API
+    Fetch parcel geometry from GURS OGC API
 
-    Uses the public WFS service from eVode/GURS:
-    https://storitve.eprostor.gov.si/
+    Uses the OGC Features API from GURS:
+    https://ipi.eprostor.gov.si/
     """
     try:
-        # GURS WFS endpoint for parcels (Zemljiški kataster)
-        wfs_url = "https://storitve.eprostor.gov.si/wfs-zk-pub/ows"
+        # GURS OGC API endpoint for parcels
+        api_url = "https://ipi.eprostor.gov.si/wfs-si-gurs-kn/ogc/features/collections/SI.GURS.KN:PARCELE/items"
 
+        # Filter for KO code and parcel number
+        # NAZIV is like "143 KO_NAME" so we need to match exactly to avoid "1432", "1433", etc.
         params = {
-            'service': 'WFS',
-            'version': '2.0.0',
-            'request': 'GetFeature',
-            'typeName': 'ZRPUB:ZR_ZK_PARCELE',  # Parcel layer
-            'outputFormat': 'application/json',
-            'srsName': 'EPSG:4326',  # WGS84 for web maps
-            'CQL_FILTER': f"KO_MID='{ko_code}' AND PARCELA='{parcel_id}'"
+            'limit': 100,
+            'f': 'json',
+            'filter': f"NAZIV LIKE '{ko_code} %' AND ST_PARCELE = '{parcel_id}'",
+            'filter-lang': 'cql-text'
         }
 
-        response = requests.get(wfs_url, params=params, timeout=30)
+        response = requests.get(api_url, params=params, timeout=30)
         response.raise_for_status()
 
         data = response.json()
 
-        # Check if we got a feature
+        # Check if we got features
         features = data.get('features', [])
         if not features:
             return None
 
-        # Get the first feature's geometry
+        # Get the first feature (should be unique match)
         feature = features[0]
         geometry = feature.get('geometry')
         properties = feature.get('properties', {})
 
-        # Calculate area from geometry if available
-        area_m2 = properties.get('POV_M2')  # Area in m² from official data
+        # Get area from POVRSINA property
+        area_m2 = properties.get('POVRSINA')
+        ko_name = properties.get('NAZIV', '').replace(f'{ko_code} ', '')
 
         return {
             'geometry': geometry,
@@ -81,8 +81,7 @@ def fetch_parcel_geometry(ko_code, parcel_id):
             'properties': {
                 'ko_code': ko_code,
                 'parcel_id': parcel_id,
-                'ko_name': properties.get('KO_IME'),
-                'povrsina_ha': properties.get('POV_HA'),  # Area in hectares
+                'ko_name': ko_name,
                 'povrsina_m2': area_m2,
             },
             'fetched_at': datetime.now().isoformat()
@@ -105,14 +104,36 @@ def collect_parcels_to_fetch():
     with open(extraction_file, 'r') as f:
         extractions = json.load(f)
 
+    # Load offers to get KO codes
+    offers_file = Path('data/fresh_agricultural_offers.json')
+    if not offers_file.exists():
+        print("⚠️  No fresh_agricultural_offers.json found")
+        return []
+
+    with open(offers_file, 'r') as f:
+        offers_data = json.load(f)
+
+    # Create offer ID to KO code mapping
+    offer_ko_map = {}
+    for offer in offers_data.get('offers', []):
+        offer_id = str(offer.get('id'))
+        ko_code = offer.get('ko_code')
+        if ko_code:
+            offer_ko_map[offer_id] = ko_code
+
     # Collect unique parcels
     parcels = {}
     for offer_id, extraction in extractions.get('extractions', {}).items():
+        # Get KO code from offer data
+        ko_code = offer_ko_map.get(str(offer_id))
+
+        if not ko_code:
+            continue
+
         for plot in extraction.get('plots', []):
-            ko_code = plot.get('ko_code')
             parcel_id = plot.get('parcel_id')
 
-            if ko_code and parcel_id:
+            if parcel_id:
                 key = f"{ko_code}/{parcel_id}"
                 if key not in parcels:
                     parcels[key] = {

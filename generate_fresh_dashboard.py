@@ -65,10 +65,38 @@ def generate_dashboard():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ponudbe za kmetijska zemljišča - e-Uprava</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .offer-row:hover {{
             background-color: #f9fafb;
+        }}
+
+        .expand-icon {{
+            display: inline-block;
+            transition: transform 0.2s;
+            margin-right: 0.5rem;
+            font-size: 0.75rem;
+        }}
+
+        .expand-icon.expanded {{
+            transform: rotate(90deg);
+        }}
+
+        .details-row td {{
+            animation: slideDown 0.2s ease-out;
+        }}
+
+        @keyframes slideDown {{
+            from {{
+                opacity: 0;
+                transform: translateY(-10px);
+            }}
+            to {{
+                opacity: 1;
+                transform: translateY(0);
+            }}
         }}
     </style>
 </head>
@@ -268,10 +296,55 @@ def generate_dashboard():
         else:
             parcels_display = "-"
 
+        # Build map data for this offer
+        map_data = {
+            'hasGeometries': False,
+            'parcels': [],
+            'offer_id': offer_id
+        }
+
+        # Add parcels with geometries
+        if plots:
+            for plot in plots:
+                parcel_id = plot.get('parcel_id', '')
+                if ko_code and parcel_id:
+                    geom_key = f"{ko_code}/{parcel_id}"
+                    geom_data = geometries.get(geom_key, {})
+                    geometry = geom_data.get('geometry')
+                    area_m2 = geom_data.get('area_m2', plot.get('area_m2'))
+
+                    if geometry:
+                        map_data['hasGeometries'] = True
+                        map_data['parcels'].append({
+                            'number': parcel_id,
+                            'area': area_m2 or 0,
+                            'geometry': geometry,
+                            'price': plot.get('price_eur'),
+                            'share': plot.get('share', '1/1')
+                        })
+
+        # Escape for HTML attribute
+        import html as html_module
+        map_data_json = html_module.escape(json.dumps(map_data, ensure_ascii=False))
+
+        # Determine if row should show map icon (has geometries)
+        has_map = map_data['hasGeometries']
+        expand_icon = "🗺️" if has_map else "▶"
+
         html += f'''
-                            <tr class="offer-row" data-notice="{notice_num.lower()}" data-ko="{ko_code}" data-ko-search="{ko_search}" data-ue-search="{ue_search}" data-institution="{institution}">
-                                <td class="px-4 py-3 text-sm text-gray-900">{idx}</td>
-                                <td class="px-4 py-3 text-sm">
+                            <tr class="offer-row cursor-pointer hover:bg-gray-50 transition"
+                                data-notice="{notice_num.lower()}"
+                                data-ko="{ko_code}"
+                                data-ko-search="{ko_search}"
+                                data-ue-search="{ue_search}"
+                                data-institution="{institution}"
+                                data-offer-id="{offer_id}"
+                                onclick="toggleDetails('{offer_id}')">
+                                <td class="px-4 py-3 text-sm text-gray-900">
+                                    <span class="expand-icon inline-block transition-transform" id="icon-{offer_id}">{expand_icon}</span>
+                                    {idx}
+                                </td>
+                                <td class="px-4 py-3 text-sm" onclick="event.stopPropagation()">
                                     <a href="{detail_url}" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline font-medium">
                                         {notice_num}
                                     </a>
@@ -283,10 +356,92 @@ def generate_dashboard():
                                 <td class="px-4 py-3 text-sm text-gray-600">{parcels_display}</td>
                                 <td class="px-4 py-3 text-sm text-gray-600">{published}</td>
                                 <td class="px-4 py-3 text-sm text-gray-600">{valid_until}</td>
-                                <td class="px-4 py-3 text-sm">
+                                <td class="px-4 py-3 text-sm" onclick="event.stopPropagation()">
                                     <a href="{pdf_url}" target="_blank" class="inline-flex items-center px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded hover:bg-green-200 transition">
                                         📄 PDF
                                     </a>
+                                </td>
+                            </tr>
+
+                            <!-- Details Row with Map -->
+                            <tr id="details-{offer_id}" class="details-row hidden" data-map-data='{map_data_json}'>
+                                <td colspan="10" class="px-4 py-4 bg-gray-50 border-t border-gray-200">
+                                    <div class="space-y-4">
+'''
+
+        # Add map section if geometries available
+        if has_map:
+            num_parcels_with_geom = len(map_data['parcels'])
+            html += f'''
+                                        <!-- Map Section -->
+                                        <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                                            <div class="px-4 py-2 bg-gray-100 border-b border-gray-200">
+                                                <h3 class="text-sm font-semibold text-gray-700">
+                                                    🗺️ Zemljevid
+                                                    <span class="ml-2 text-xs font-normal text-green-600">({num_parcels_with_geom} parcel{'e' if num_parcels_with_geom > 1 else 'a'})</span>
+                                                </h3>
+                                            </div>
+                                            <div id="map-{offer_id}" class="w-full" style="height: 300px;"></div>
+                                        </div>
+'''
+
+        # Add details section
+        html += f'''
+                                        <!-- Details Section -->
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <h3 class="text-sm font-semibold text-gray-700 mb-2">📋 Podrobnosti Objave</h3>
+                                                <dl class="space-y-2 text-sm">
+                                                    <div class="flex">
+                                                        <dt class="font-medium text-gray-600 w-32">ID:</dt>
+                                                        <dd class="text-gray-900">{offer_id}</dd>
+                                                    </div>
+                                                    <div class="flex">
+                                                        <dt class="font-medium text-gray-600 w-32">Številka:</dt>
+                                                        <dd class="text-gray-900">{notice_num}</dd>
+                                                    </div>
+                                                    <div class="flex">
+                                                        <dt class="font-medium text-gray-600 w-32">Institucija:</dt>
+                                                        <dd class="text-gray-900">{institution}</dd>
+                                                    </div>
+                                                    <div class="flex">
+                                                        <dt class="font-medium text-gray-600 w-32">KO:</dt>
+                                                        <dd class="text-gray-900">{ko_display}</dd>
+                                                    </div>
+                                                </dl>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-sm font-semibold text-gray-700 mb-2">💰 Podatki iz OCR</h3>
+                                                <dl class="space-y-2 text-sm">
+                                                    <div class="flex">
+                                                        <dt class="font-medium text-gray-600 w-32">Skupna cena:</dt>
+                                                        <dd class="text-gray-900">{price_display}</dd>
+                                                    </div>
+                                                    <div class="flex">
+                                                        <dt class="font-medium text-gray-600 w-32">Skupna površina:</dt>
+                                                        <dd class="text-gray-900">{area_display}</dd>
+                                                    </div>
+                                                    <div class="flex">
+                                                        <dt class="font-medium text-gray-600 w-32">Št. parcel:</dt>
+                                                        <dd class="text-gray-900">{parcels_display}</dd>
+                                                    </div>
+'''
+
+        # Add price per m² if both price and area available
+        if total_price and total_area_m2 > 0:
+            price_per_m2 = total_price / total_area_m2
+            html += f'''
+                                                    <div class="flex">
+                                                        <dt class="font-medium text-gray-600 w-32">Cena/m²:</dt>
+                                                        <dd class="text-gray-900">€{price_per_m2:.2f}</dd>
+                                                    </div>
+'''
+
+        html += '''
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
 '''
@@ -300,6 +455,9 @@ def generate_dashboard():
     </div>
 
     <script>
+        // Track initialized maps
+        const initializedMaps = {};
+
         // Filter functionality
         const ueFilter = document.getElementById('ueFilter');
         const koFilter = document.getElementById('koFilter');
@@ -326,6 +484,14 @@ def generate_dashboard():
                     visible++;
                 } else {
                     row.classList.add('hidden');
+                    // Also hide details row if main row is hidden
+                    const offerId = row.getAttribute('data-offer-id');
+                    if (offerId) {
+                        const detailsRow = document.getElementById(`details-${offerId}`);
+                        if (detailsRow) {
+                            detailsRow.classList.add('hidden');
+                        }
+                    }
                 }
             });
 
@@ -340,6 +506,94 @@ def generate_dashboard():
             koFilter.value = '';
             applyFilters();
         });
+
+        // Toggle details row
+        function toggleDetails(offerId) {
+            const detailsRow = document.getElementById(`details-${offerId}`);
+            const icon = document.getElementById(`icon-${offerId}`);
+
+            if (detailsRow.classList.contains('hidden')) {
+                detailsRow.classList.remove('hidden');
+                icon.classList.add('expanded');
+
+                // Initialize map if not already done
+                if (!initializedMaps[offerId]) {
+                    setTimeout(() => {
+                        initializeMap(offerId);
+                        initializedMaps[offerId] = true;
+                    }, 100);
+                }
+            } else {
+                detailsRow.classList.add('hidden');
+                icon.classList.remove('expanded');
+            }
+        }
+
+        // Initialize map for an offer
+        function initializeMap(offerId) {
+            const detailsRow = document.getElementById(`details-${offerId}`);
+            const mapDataAttr = detailsRow.getAttribute('data-map-data');
+            if (!mapDataAttr) return;
+
+            const mapData = JSON.parse(mapDataAttr);
+            const mapDiv = document.getElementById(`map-${offerId}`);
+
+            if (!mapDiv) return;
+
+            // Create map
+            const map = L.map(mapDiv);
+
+            // Add OpenStreetMap tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            let bounds = null;
+
+            // Add parcel geometries if available
+            if (mapData.hasGeometries && mapData.parcels.length > 0) {
+                mapData.parcels.forEach(parcel => {
+                    const layer = L.geoJSON(parcel.geometry, {
+                        style: {
+                            fillColor: '#3b82f6',
+                            weight: 2,
+                            opacity: 1,
+                            color: '#1e40af',
+                            fillOpacity: 0.5
+                        }
+                    }).addTo(map);
+
+                    // Add popup
+                    const area_ha = (parcel.area / 10000).toFixed(2);
+                    let popupContent = `<strong>Parcela: ${parcel.number}</strong><br>Površina: ${parcel.area.toLocaleString()} m²<br>(${area_ha} ha)`;
+
+                    if (parcel.price) {
+                        popupContent += `<br>Cena: €${parcel.price.toLocaleString()}`;
+                    }
+                    if (parcel.share && parcel.share !== '1/1') {
+                        popupContent += `<br>Delež: ${parcel.share}`;
+                    }
+
+                    layer.bindPopup(popupContent);
+
+                    // Extend bounds
+                    if (!bounds) {
+                        bounds = layer.getBounds();
+                    } else {
+                        bounds.extend(layer.getBounds());
+                    }
+                });
+
+                // Fit map to parcel bounds
+                if (bounds) {
+                    map.fitBounds(bounds, { padding: [20, 20] });
+                }
+            } else {
+                // Default to Slovenia center if no geometries
+                map.setView([46.151241, 14.995463], 8);
+            }
+        }
     </script>
 </body>
 </html>
