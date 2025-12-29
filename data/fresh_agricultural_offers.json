@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "created_at": "2025-12-29T00:00:33.244332",
+    "created_at": "2025-12-29T01:00:25.521133",
     "total_offers": 521,
     "source": "https://e-uprava.gov.si/si/e-uprava/oglasnadeska.html",
     "type": "agricultural_land_offers"
@@ -775,22 +775,6 @@
       "ko_name": "Dobrovnik"
     },
     {
-      "title": "Ponudba za kmetijsko zemljišče št. 339-928/2025-6222-2",
-      "detail_url": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630080",
-      "guid": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630080",
-      "rss_published": "",
-      "description": "",
-      "id": "9630080",
-      "municipality": "Upravna enota Lendava",
-      "institution": "Upravna enota Lendava",
-      "notice_number": "339-928/2025-6222-2",
-      "published_date": "15. 12. 2025",
-      "valid_until": "30. 12. 2025",
-      "pdf_url": "https://e-uprava.gov.si/.download/oglasna/datoteka?file=876893&disposition=attachment",
-      "ko_code": "146",
-      "ko_name": "Dobrovnik"
-    },
-    {
       "title": "Ponudba za kmetijsko zemljišče št. 339-927/2025-6222-3",
       "detail_url": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630077",
       "guid": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630077",
@@ -805,6 +789,22 @@
       "pdf_url": "https://e-uprava.gov.si/.download/oglasna/datoteka?file=876890&disposition=attachment",
       "ko_code": "142",
       "ko_name": "Srednja Bistrica"
+    },
+    {
+      "title": "Ponudba za kmetijsko zemljišče št. 339-928/2025-6222-2",
+      "detail_url": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630080",
+      "guid": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630080",
+      "rss_published": "",
+      "description": "",
+      "id": "9630080",
+      "municipality": "Upravna enota Lendava",
+      "institution": "Upravna enota Lendava",
+      "notice_number": "339-928/2025-6222-2",
+      "published_date": "15. 12. 2025",
+      "valid_until": "30. 12. 2025",
+      "pdf_url": "https://e-uprava.gov.si/.download/oglasna/datoteka?file=876893&disposition=attachment",
+      "ko_code": "146",
+      "ko_name": "Dobrovnik"
     },
     {
       "title": "Ponudba za kmetijsko zemljišče št. 339-929/2025-6222-3",
@@ -1159,22 +1159,6 @@
       "ko_name": ""
     },
     {
-      "title": "Ponudba za kmetijsko zemljišče št. 330-1488/2025-6217-2",
-      "detail_url": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630046",
-      "guid": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630046",
-      "rss_published": "",
-      "description": "",
-      "id": "9630046",
-      "municipality": "Upravna enota Koper",
-      "institution": "Upravna enota Koper",
-      "notice_number": "330-1488/2025-6217-2",
-      "published_date": "15. 12. 2025",
-      "valid_until": "30. 12. 2025",
-      "pdf_url": "https://e-uprava.gov.si/.download/oglasna/datoteka?file=876859&disposition=attachment",
-      "ko_code": "2613",
-      "ko_name": "TRUŠKE"
-    },
-    {
       "title": "Ponudba za kmetijsko zemljišče št. 330-1485/2025-6217-2",
       "detail_url": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630045",
       "guid": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630045",
@@ -1189,6 +1173,22 @@
       "pdf_url": "https://e-uprava.gov.si/.download/oglasna/datoteka?file=876858&disposition=attachment",
       "ko_code": "2624",
       "ko_name": "KOŠTABONA"
+    },
+    {
+      "title": "Ponudba za kmetijsko zemljišče št. 330-1488/2025-6217-2",
+      "detail_url": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630046",
+      "guid": "http://e-uprava.gov.si/si/e-uprava/oglasnadeska/podrobnosti-objave.html?id=9630046",
+      "rss_published": "",
+      "description": "",
+      "id": "9630046",
+      "municipality": "Upravna enota Koper",
+      "institution": "Upravna enota Koper",
+      "notice_number": "330-1488/2025-6217-2",
+      "published_date": "15. 12. 2025",
+      "valid_until": "30. 12. 2025",
+      "pdf_url": "https://e-uprava.gov.si/.download/oglasna/datoteka?file=876859&disposition=attachment",
+      "ko_code": "2613",
+      "ko_name": "TRUŠKE"
     },
     {
       "title": "Ponudba za kmetijsko zemljišče št. 330-1490/2025-6217-2",
