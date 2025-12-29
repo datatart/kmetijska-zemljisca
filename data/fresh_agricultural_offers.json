@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "created_at": "2025-12-29T21:53:32.709806",
+    "created_at": "2025-12-29T21:21:23.834347",
     "total_offers": 567,
     "source": "https://e-uprava.gov.si/si/e-uprava/oglasnadeska.html",
     "type": "agricultural_land_offers"
@@ -8669,15 +8669,14 @@
       "rss_published": "",
       "description": "",
       "id": "9632517",
-      "municipality": "",
-      "institution": "",
-      "notice_number": "",
-      "published_date": "",
-      "valid_until": "",
-      "pdf_url": "",
+      "municipality": "Upravna enota Brežice",
+      "institution": "Upravna enota Brežice",
+      "notice_number": "330-1295/2025-6202-3",
+      "published_date": "29. 12. 2025",
+      "valid_until": "13. 1. 2026",
+      "pdf_url": "https://e-uprava.gov.si/.download/oglasna/datoteka?file=879361&disposition=attachment",
       "ko_code": "",
-      "ko_name": "",
-      "error": "HTTPSConnectionPool(host='e-uprava.gov.si', port=443): Read timed out. (read timeout=30)"
+      "ko_name": ""
     },
     {
       "title": "Ponudba za kmetijsko zemljišče št. 330-1292/2025-6202-3",
