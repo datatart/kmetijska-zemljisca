@@ -101,8 +101,9 @@ def extract_ko_improved(soup, ko_list, name_to_code):
             results.append((code, name.strip(), 0.9, 'ko_code_name'))
 
     # Method 2: "k.o. NAME" pattern (lookup name in official list)
+    # Improved regex to stop before common words like "parc", "parcela"
     matches = re.findall(
-        r'k\.?\s*o\.?\s+([A-ZČŠŽĆĐ][A-ZČŠŽĆĐ\s]{2,40}?)(?:[,\.\n]|$)',
+        r'k\.?\s*o\.?\s+([A-ZČŠŽĆĐ][A-ZČŠŽĆĐ\s]{2,40}?)(?:\s+parc|\s+parcela|[,\.\n]|$)',
         text,
         re.IGNORECASE
     )
@@ -114,10 +115,13 @@ def extract_ko_improved(soup, ko_list, name_to_code):
             code = name_to_code[name_upper]
             results.append((code, name_clean, 0.85, 'ko_name_only'))
         else:
-            # Try partial match
-            for official_name, official_code in name_to_code.items():
-                if name_upper in official_name or official_name in name_upper:
-                    if len(name_upper) > 4:
+            # Try partial match - but with stricter rules to avoid false matches
+            # Avoid short names (<=5 chars) to prevent "IG" matching "MAREZIGE"
+            if len(name_upper) > 5:
+                for official_name, official_code in name_to_code.items():
+                    # Only match if extracted name STARTS the official name
+                    # This prevents "IG" from matching "MAREZIGE"
+                    if official_name.startswith(name_upper):
                         results.append((official_code, official_name, 0.7, 'ko_name_partial'))
                         break
 
@@ -126,8 +130,9 @@ def extract_ko_improved(soup, ko_list, name_to_code):
     for div in no_margin_divs:
         div_text = div.get_text()
 
+        # Same improved regex to stop before "parc", "parcela"
         matches = re.findall(
-            r'k\.?\s*o\.?\s+([A-ZČŠŽĆĐ][A-ZČŠŽĆĐ\s]{2,40}?)(?:[,\.\n]|$)',
+            r'k\.?\s*o\.?\s+([A-ZČŠŽĆĐ][A-ZČŠŽĆĐ\s]{2,40}?)(?:\s+parc|\s+parcela|[,\.\n]|$)',
             div_text,
             re.IGNORECASE
         )
