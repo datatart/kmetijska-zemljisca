@@ -28,8 +28,20 @@ def generate_dashboard():
     with open(dataset_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    offers = data['offers']
+    all_offers = data['offers']
     now = datetime.now()
+
+    # Filter out offers with missing critical data
+    offers = [
+        offer for offer in all_offers
+        if offer.get('notice_number') and
+           offer.get('institution') and
+           offer.get('published_date') and
+           offer.get('detail_url')
+    ]
+
+    print(f"Filtered {len(all_offers) - len(offers)} offers with missing data")
+    print(f"Displaying {len(offers)} valid offers")
 
     # Load extraction results (OCR data)
     extraction_file = Path("data/extraction_results.json")
@@ -105,7 +117,7 @@ def generate_dashboard():
         <!-- Header with Statistics -->
         <header class="bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg">
             <div class="max-w-7xl mx-auto px-4 py-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
@@ -133,6 +145,16 @@ def generate_dashboard():
                                 <p class="text-3xl font-bold text-white mt-2">{offers_with_price}</p>
                             </div>
                             <div class="text-4xl">💰</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-green-100 text-sm font-medium">Zadnja posodobitev</p>
+                                <p class="text-lg font-bold text-white mt-2">{datetime.now().strftime("%d.%m.%Y %H:%M")}</p>
+                            </div>
+                            <div class="text-4xl">🕐</div>
                         </div>
                     </div>
                 </div>
