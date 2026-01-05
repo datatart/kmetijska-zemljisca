@@ -110,6 +110,16 @@ def generate_dashboard():
                 transform: translateY(0);
             }}
         }}
+
+        /* Multi-select dropdown styles */
+        .ue-dropdown {{
+            position: relative;
+        }}
+
+        .ue-dropdown-menu {{
+            max-height: 24rem;
+            overflow-y: auto;
+        }}
     </style>
 </head>
 <body class="bg-gray-100">
@@ -167,13 +177,28 @@ def generate_dashboard():
             <div class="bg-white rounded-lg shadow p-6 mb-6">
                 <h2 class="text-lg font-semibold text-gray-900 mb-4">Filtriranje</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
+                    <div class="ue-dropdown">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Filtriraj po upravni enoti</label>
-                        <select
-                            id="ueFilter"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        <button
+                            id="ueFilterButton"
+                            type="button"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-left flex items-center justify-between"
                         >
-                            <option value="">Vse upravne enote</option>
+                            <span id="ueFilterLabel">Vse upravne enote</span>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="ueFilterDropdown" class="hidden absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg ue-dropdown-menu">
+                            <div class="sticky top-0 bg-gray-50 border-b border-gray-200 p-2 flex gap-2">
+                                <button id="selectAllBtn" type="button" class="flex-1 px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition">
+                                    Izberi vse
+                                </button>
+                                <button id="clearAllBtn" type="button" class="flex-1 px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition">
+                                    Počisti vse
+                                </button>
+                            </div>
+                            <div class="p-2">
 '''
 
     # Get unique institutions
@@ -183,13 +208,18 @@ def generate_dashboard():
         if institution:
             institutions.add(institution)
 
-    # Add institution filter options (sorted)
+    # Add institution checkbox options (sorted)
     for institution in sorted(institutions):
         # Remove "Upravna enota " prefix for display
         display_name = institution.replace('Upravna enota ', '')
-        html += f'                            <option value="{institution}">{display_name}</option>\n'
+        html += f'''                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="{institution}" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">{display_name}</span>
+                                </label>
+'''
 
-    html += '''                        </select>
+    html += '''                            </div>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Iskanje</label>
@@ -481,14 +511,111 @@ def generate_dashboard():
         const initializedMaps = {};
 
         // Filter functionality
-        const ueFilter = document.getElementById('ueFilter');
+        const ueFilterButton = document.getElementById('ueFilterButton');
+        const ueFilterDropdown = document.getElementById('ueFilterDropdown');
+        const ueFilterLabel = document.getElementById('ueFilterLabel');
+        const ueCheckboxes = document.querySelectorAll('.ue-checkbox');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
         const koFilter = document.getElementById('koFilter');
         const resetBtn = document.getElementById('resetBtn');
         const visibleCount = document.getElementById('visibleCount');
         const rows = document.querySelectorAll('.offer-row');
 
+        const STORAGE_KEY = 'selectedUpravneEnote';
+        let selectedUE = new Set();
+
+        // Load saved selections from localStorage
+        function loadSavedSelections() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed)) {
+                        selectedUE = new Set(parsed);
+                        // Update checkboxes to match
+                        ueCheckboxes.forEach(cb => {
+                            cb.checked = selectedUE.has(cb.value);
+                        });
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to load saved selections:', e);
+            }
+        }
+
+        // Save selections to localStorage
+        function saveSelections() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify([...selectedUE]));
+            } catch (e) {
+                console.warn('Failed to save selections:', e);
+            }
+        }
+
+        // Update the filter label based on selection
+        function updateFilterLabel() {
+            const count = selectedUE.size;
+            if (count === 0) {
+                ueFilterLabel.textContent = 'Vse upravne enote';
+            } else if (count === 1) {
+                const selected = [...selectedUE][0].replace('Upravna enota ', '');
+                ueFilterLabel.textContent = selected;
+            } else {
+                ueFilterLabel.textContent = `${count} izbrano`;
+            }
+        }
+
+        // Toggle dropdown visibility
+        ueFilterButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            ueFilterDropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!ueFilterButton.contains(e.target) && !ueFilterDropdown.contains(e.target)) {
+                ueFilterDropdown.classList.add('hidden');
+            }
+        });
+
+        // Handle checkbox changes
+        ueFilterDropdown.addEventListener('click', (e) => {
+            if (e.target.classList.contains('ue-checkbox')) {
+                if (e.target.checked) {
+                    selectedUE.add(e.target.value);
+                } else {
+                    selectedUE.delete(e.target.value);
+                }
+                updateFilterLabel();
+                saveSelections();
+                applyFilters();
+            }
+        });
+
+        // Select all button
+        selectAllBtn.addEventListener('click', () => {
+            ueCheckboxes.forEach(cb => {
+                cb.checked = true;
+                selectedUE.add(cb.value);
+            });
+            updateFilterLabel();
+            saveSelections();
+            applyFilters();
+        });
+
+        // Clear all button
+        clearAllBtn.addEventListener('click', () => {
+            ueCheckboxes.forEach(cb => {
+                cb.checked = false;
+            });
+            selectedUE.clear();
+            updateFilterLabel();
+            saveSelections();
+            applyFilters();
+        });
+
         function applyFilters() {
-            const selectedUE = ueFilter.value;
             const searchTerm = koFilter.value.toLowerCase();
             let visible = 0;
 
@@ -497,7 +624,8 @@ def generate_dashboard():
                 const koSearch = row.getAttribute('data-ko-search');
                 const ueSearch = row.getAttribute('data-ue-search');
 
-                const matchesUE = !selectedUE || institution === selectedUE;
+                // If no UE selected, show all. Otherwise, check if institution is in selected set.
+                const matchesUE = selectedUE.size === 0 || selectedUE.has(institution);
                 // Search matches if found in either KO or UE
                 const matchesSearch = !searchTerm || koSearch.includes(searchTerm) || ueSearch.includes(searchTerm);
 
@@ -520,14 +648,23 @@ def generate_dashboard():
             visibleCount.textContent = visible;
         }
 
-        ueFilter.addEventListener('change', applyFilters);
         koFilter.addEventListener('input', applyFilters);
 
         resetBtn.addEventListener('click', () => {
-            ueFilter.value = '';
+            ueCheckboxes.forEach(cb => {
+                cb.checked = false;
+            });
+            selectedUE.clear();
             koFilter.value = '';
+            updateFilterLabel();
+            saveSelections();
             applyFilters();
         });
+
+        // Initialize: load saved selections and apply filters
+        loadSavedSelections();
+        updateFilterLabel();
+        applyFilters();
 
         // Toggle details row
         function toggleDetails(offerId) {

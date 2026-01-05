@@ -37,6 +37,16 @@
                 transform: translateY(0);
             }
         }
+
+        /* Multi-select dropdown styles */
+        .ue-dropdown {
+            position: relative;
+        }
+
+        .ue-dropdown-menu {
+            max-height: 24rem;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -79,7 +89,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-green-100 text-sm font-medium">Zadnja posodobitev</p>
-                                <p class="text-lg font-bold text-white mt-2">05.01.2026 06:59</p>
+                                <p class="text-lg font-bold text-white mt-2">05.01.2026 11:58</p>
                             </div>
                             <div class="text-4xl">🕐</div>
                         </div>
@@ -94,66 +104,238 @@
             <div class="bg-white rounded-lg shadow p-6 mb-6">
                 <h2 class="text-lg font-semibold text-gray-900 mb-4">Filtriranje</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
+                    <div class="ue-dropdown">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Filtriraj po upravni enoti</label>
-                        <select
-                            id="ueFilter"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        <button
+                            id="ueFilterButton"
+                            type="button"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-left flex items-center justify-between"
                         >
-                            <option value="">Vse upravne enote</option>
-                            <option value="Upravna enota Ajdovščina">Ajdovščina</option>
-                            <option value="Upravna enota Brežice">Brežice</option>
-                            <option value="Upravna enota Celje">Celje</option>
-                            <option value="Upravna enota Cerknica">Cerknica</option>
-                            <option value="Upravna enota Domžale">Domžale</option>
-                            <option value="Upravna enota Gornja Radgona">Gornja Radgona</option>
-                            <option value="Upravna enota Grosuplje">Grosuplje</option>
-                            <option value="Upravna enota Hrastnik">Hrastnik</option>
-                            <option value="Upravna enota Idrija">Idrija</option>
-                            <option value="Upravna enota Ilirska Bistrica">Ilirska Bistrica</option>
-                            <option value="Upravna enota Izola">Izola</option>
-                            <option value="Upravna enota Kamnik">Kamnik</option>
-                            <option value="Upravna enota Koper">Koper</option>
-                            <option value="Upravna enota Kočevje">Kočevje</option>
-                            <option value="Upravna enota Kranj">Kranj</option>
-                            <option value="Upravna enota Krško">Krško</option>
-                            <option value="Upravna enota Laško">Laško</option>
-                            <option value="Upravna enota Lenart">Lenart</option>
-                            <option value="Upravna enota Lendava">Lendava</option>
-                            <option value="Upravna enota Litija">Litija</option>
-                            <option value="Upravna enota Ljubljana">Ljubljana</option>
-                            <option value="Upravna enota Logatec">Logatec</option>
-                            <option value="Upravna enota Maribor">Maribor</option>
-                            <option value="Upravna enota Metlika">Metlika</option>
-                            <option value="Upravna enota Mozirje">Mozirje</option>
-                            <option value="Upravna enota Murska Sobota">Murska Sobota</option>
-                            <option value="Upravna enota Nova Gorica">Nova Gorica</option>
-                            <option value="Upravna enota Novo mesto">Novo mesto</option>
-                            <option value="Upravna enota Ormož">Ormož</option>
-                            <option value="Upravna enota Pesnica">Pesnica</option>
-                            <option value="Upravna enota Piran">Piran</option>
-                            <option value="Upravna enota Ptuj">Ptuj</option>
-                            <option value="Upravna enota Radovljica">Radovljica</option>
-                            <option value="Upravna enota Ribnica">Ribnica</option>
-                            <option value="Upravna enota Ruše">Ruše</option>
-                            <option value="Upravna enota Sevnica">Sevnica</option>
-                            <option value="Upravna enota Sežana">Sežana</option>
-                            <option value="Upravna enota Slovenj Gradec">Slovenj Gradec</option>
-                            <option value="Upravna enota Slovenska Bistrica">Slovenska Bistrica</option>
-                            <option value="Upravna enota Slovenske Konjice">Slovenske Konjice</option>
-                            <option value="Upravna enota Tolmin">Tolmin</option>
-                            <option value="Upravna enota Trbovlje">Trbovlje</option>
-                            <option value="Upravna enota Trebnje">Trebnje</option>
-                            <option value="Upravna enota Tržič">Tržič</option>
-                            <option value="Upravna enota Velenje">Velenje</option>
-                            <option value="Upravna enota Vrhnika">Vrhnika</option>
-                            <option value="Upravna enota Zagorje ob Savi">Zagorje ob Savi</option>
-                            <option value="Upravna enota Črnomelj">Črnomelj</option>
-                            <option value="Upravna enota Šentjur pri Celju">Šentjur pri Celju</option>
-                            <option value="Upravna enota Škofja Loka">Škofja Loka</option>
-                            <option value="Upravna enota Šmarje pri Jelšah">Šmarje pri Jelšah</option>
-                            <option value="Upravna enota Žalec">Žalec</option>
-                        </select>
+                            <span id="ueFilterLabel">Vse upravne enote</span>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="ueFilterDropdown" class="hidden absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg ue-dropdown-menu">
+                            <div class="sticky top-0 bg-gray-50 border-b border-gray-200 p-2 flex gap-2">
+                                <button id="selectAllBtn" type="button" class="flex-1 px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition">
+                                    Izberi vse
+                                </button>
+                                <button id="clearAllBtn" type="button" class="flex-1 px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition">
+                                    Počisti vse
+                                </button>
+                            </div>
+                            <div class="p-2">
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Ajdovščina" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Ajdovščina</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Brežice" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Brežice</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Celje" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Celje</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Cerknica" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Cerknica</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Domžale" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Domžale</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Gornja Radgona" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Gornja Radgona</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Grosuplje" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Grosuplje</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Hrastnik" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Hrastnik</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Idrija" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Idrija</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Ilirska Bistrica" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Ilirska Bistrica</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Izola" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Izola</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Kamnik" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Kamnik</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Koper" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Koper</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Kočevje" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Kočevje</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Kranj" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Kranj</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Krško" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Krško</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Laško" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Laško</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Lenart" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Lenart</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Lendava" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Lendava</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Litija" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Litija</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Ljubljana" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Ljubljana</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Logatec" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Logatec</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Maribor" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Maribor</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Metlika" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Metlika</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Mozirje" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Mozirje</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Murska Sobota" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Murska Sobota</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Nova Gorica" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Nova Gorica</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Novo mesto" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Novo mesto</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Ormož" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Ormož</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Pesnica" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Pesnica</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Piran" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Piran</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Ptuj" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Ptuj</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Radovljica" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Radovljica</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Ribnica" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Ribnica</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Ruše" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Ruše</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Sevnica" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Sevnica</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Sežana" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Sežana</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Slovenj Gradec" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Slovenj Gradec</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Slovenska Bistrica" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Slovenska Bistrica</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Slovenske Konjice" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Slovenske Konjice</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Tolmin" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Tolmin</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Trbovlje" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Trbovlje</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Trebnje" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Trebnje</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Tržič" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Tržič</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Velenje" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Velenje</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Vrhnika" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Vrhnika</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Zagorje ob Savi" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Zagorje ob Savi</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Črnomelj" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Črnomelj</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Šentjur pri Celju" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Šentjur pri Celju</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Škofja Loka" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Škofja Loka</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Šmarje pri Jelšah" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Šmarje pri Jelšah</span>
+                                </label>
+                                <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                    <input type="checkbox" value="Upravna enota Žalec" class="ue-checkbox w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                                    <span class="ml-3 text-sm text-gray-700">Žalec</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Iskanje</label>
@@ -26843,14 +27025,111 @@
         const initializedMaps = {};
 
         // Filter functionality
-        const ueFilter = document.getElementById('ueFilter');
+        const ueFilterButton = document.getElementById('ueFilterButton');
+        const ueFilterDropdown = document.getElementById('ueFilterDropdown');
+        const ueFilterLabel = document.getElementById('ueFilterLabel');
+        const ueCheckboxes = document.querySelectorAll('.ue-checkbox');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
         const koFilter = document.getElementById('koFilter');
         const resetBtn = document.getElementById('resetBtn');
         const visibleCount = document.getElementById('visibleCount');
         const rows = document.querySelectorAll('.offer-row');
 
+        const STORAGE_KEY = 'selectedUpravneEnote';
+        let selectedUE = new Set();
+
+        // Load saved selections from localStorage
+        function loadSavedSelections() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed)) {
+                        selectedUE = new Set(parsed);
+                        // Update checkboxes to match
+                        ueCheckboxes.forEach(cb => {
+                            cb.checked = selectedUE.has(cb.value);
+                        });
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to load saved selections:', e);
+            }
+        }
+
+        // Save selections to localStorage
+        function saveSelections() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify([...selectedUE]));
+            } catch (e) {
+                console.warn('Failed to save selections:', e);
+            }
+        }
+
+        // Update the filter label based on selection
+        function updateFilterLabel() {
+            const count = selectedUE.size;
+            if (count === 0) {
+                ueFilterLabel.textContent = 'Vse upravne enote';
+            } else if (count === 1) {
+                const selected = [...selectedUE][0].replace('Upravna enota ', '');
+                ueFilterLabel.textContent = selected;
+            } else {
+                ueFilterLabel.textContent = `${count} izbrano`;
+            }
+        }
+
+        // Toggle dropdown visibility
+        ueFilterButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            ueFilterDropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!ueFilterButton.contains(e.target) && !ueFilterDropdown.contains(e.target)) {
+                ueFilterDropdown.classList.add('hidden');
+            }
+        });
+
+        // Handle checkbox changes
+        ueFilterDropdown.addEventListener('click', (e) => {
+            if (e.target.classList.contains('ue-checkbox')) {
+                if (e.target.checked) {
+                    selectedUE.add(e.target.value);
+                } else {
+                    selectedUE.delete(e.target.value);
+                }
+                updateFilterLabel();
+                saveSelections();
+                applyFilters();
+            }
+        });
+
+        // Select all button
+        selectAllBtn.addEventListener('click', () => {
+            ueCheckboxes.forEach(cb => {
+                cb.checked = true;
+                selectedUE.add(cb.value);
+            });
+            updateFilterLabel();
+            saveSelections();
+            applyFilters();
+        });
+
+        // Clear all button
+        clearAllBtn.addEventListener('click', () => {
+            ueCheckboxes.forEach(cb => {
+                cb.checked = false;
+            });
+            selectedUE.clear();
+            updateFilterLabel();
+            saveSelections();
+            applyFilters();
+        });
+
         function applyFilters() {
-            const selectedUE = ueFilter.value;
             const searchTerm = koFilter.value.toLowerCase();
             let visible = 0;
 
@@ -26859,7 +27138,8 @@
                 const koSearch = row.getAttribute('data-ko-search');
                 const ueSearch = row.getAttribute('data-ue-search');
 
-                const matchesUE = !selectedUE || institution === selectedUE;
+                // If no UE selected, show all. Otherwise, check if institution is in selected set.
+                const matchesUE = selectedUE.size === 0 || selectedUE.has(institution);
                 // Search matches if found in either KO or UE
                 const matchesSearch = !searchTerm || koSearch.includes(searchTerm) || ueSearch.includes(searchTerm);
 
@@ -26882,14 +27162,23 @@
             visibleCount.textContent = visible;
         }
 
-        ueFilter.addEventListener('change', applyFilters);
         koFilter.addEventListener('input', applyFilters);
 
         resetBtn.addEventListener('click', () => {
-            ueFilter.value = '';
+            ueCheckboxes.forEach(cb => {
+                cb.checked = false;
+            });
+            selectedUE.clear();
             koFilter.value = '';
+            updateFilterLabel();
+            saveSelections();
             applyFilters();
         });
+
+        // Initialize: load saved selections and apply filters
+        loadSavedSelections();
+        updateFilterLabel();
+        applyFilters();
 
         // Toggle details row
         function toggleDetails(offerId) {
