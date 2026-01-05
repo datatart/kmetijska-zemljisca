@@ -43,37 +43,65 @@ def normalize_ko_code(code):
         return code
 
 
-def fetch_rss_feed():
-    """Fetch RSS feed and return agricultural offers"""
+def fetch_rss_feed(max_retries=3, retry_delay=5):
+    """Fetch RSS feed and return agricultural offers with retry logic"""
     rss_url = "https://e-uprava.gov.si/oglasnaDeskaFeeds/si/e-uprava/oglasnadeska"
 
     print(f"📡 Fetching RSS feed from: {rss_url}")
-    response = requests.get(rss_url, timeout=30)
-    response.raise_for_status()
 
-    root = ET.fromstring(response.text)
-    items = root.findall('.//item')
+    last_error = None
+    for attempt in range(1, max_retries + 1):
+        try:
+            response = requests.get(rss_url, timeout=30)
+            response.raise_for_status()
 
-    # Filter for agricultural offers
-    agri_offers = []
-    for item in items:
-        title = item.find('title')
-        if title is not None and 'kmetijsko' in title.text.lower():
-            link = item.find('link')
-            guid = item.find('guid')
-            pubDate = item.find('pubDate')
-            description = item.find('description')
+            root = ET.fromstring(response.text)
+            items = root.findall('.//item')
 
-            agri_offers.append({
-                'title': title.text,
-                'detail_url': link.text if link is not None else '',
-                'guid': guid.text if guid is not None else '',
-                'rss_published': pubDate.text if pubDate is not None else '',
-                'description': description.text if description is not None else ''
-            })
+            # Filter for agricultural offers
+            agri_offers = []
+            for item in items:
+                title = item.find('title')
+                if title is not None and 'kmetijsko' in title.text.lower():
+                    link = item.find('link')
+                    guid = item.find('guid')
+                    pubDate = item.find('pubDate')
+                    description = item.find('description')
 
-    print(f"   ✓ Found {len(agri_offers)} agricultural land offers")
-    return agri_offers
+                    agri_offers.append({
+                        'title': title.text,
+                        'detail_url': link.text if link is not None else '',
+                        'guid': guid.text if guid is not None else '',
+                        'rss_published': pubDate.text if pubDate is not None else '',
+                        'description': description.text if description is not None else ''
+                    })
+
+            print(f"   ✓ Found {len(agri_offers)} agricultural land offers")
+            return agri_offers
+
+        except requests.exceptions.HTTPError as e:
+            last_error = e
+            if attempt < max_retries:
+                print(f"   ⚠️  Attempt {attempt}/{max_retries} failed: {e}")
+                print(f"   ⏳ Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+                retry_delay *= 2  # Exponential backoff
+            else:
+                print(f"   ❌ All {max_retries} attempts failed")
+                raise
+
+        except requests.exceptions.RequestException as e:
+            last_error = e
+            if attempt < max_retries:
+                print(f"   ⚠️  Attempt {attempt}/{max_retries} failed: {e}")
+                print(f"   ⏳ Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+                retry_delay *= 2
+            else:
+                print(f"   ❌ All {max_retries} attempts failed")
+                raise
+
+    raise last_error
 
 
 def extract_id_from_url(url):
