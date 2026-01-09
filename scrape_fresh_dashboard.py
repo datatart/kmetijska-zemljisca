@@ -45,7 +45,7 @@ def normalize_ko_code(code):
 
 def fetch_rss_feed(max_retries=3, retry_delay=5):
     """Fetch RSS feed and return agricultural offers with retry logic"""
-    rss_url = "https://e-uprava.gov.si/oglasnaDeskaFeeds/si/e-uprava/oglasnadeska"
+    rss_url = "https://e-uprava.gov.si/rss/?generatorName=oglasnaDeska&siteRoot=%2Fsi%2Fe-uprava%2Foglasnadeska"
 
     print(f"📡 Fetching RSS feed from: {rss_url}")
 
