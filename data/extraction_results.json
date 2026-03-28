@@ -2,8 +2,8 @@
   "metadata": {
     "created_at": "2025-12-29T00:23:03.803805",
     "migrated_from": "enhanced_extraction.json",
-    "total_extractions": 4933,
-    "last_updated": "2026-03-27T07:58:39.681622"
+    "total_extractions": 4979,
+    "last_updated": "2026-03-28T07:43:43.956700"
   },
   "extractions": {
     "9628572": {
@@ -159961,6 +159961,992 @@
       "offer_id": "9657698",
       "timestamp": "2026-03-27T07:58:39.680879",
       "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657705": {
+      "offer_id": "9657705",
+      "timestamp": "2026-03-28T07:35:31.206608",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657706": {
+      "offer_id": "9657706",
+      "timestamp": "2026-03-28T07:35:37.283349",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657715": {
+      "offer_id": "9657715",
+      "timestamp": "2026-03-28T07:35:42.547591",
+      "total_price": 100.0,
+      "buyer_known": true,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657723": {
+      "offer_id": "9657723",
+      "timestamp": "2026-03-28T07:35:49.050938",
+      "total_price": 13713.0,
+      "buyer_known": false,
+      "confidence_score": 0.7,
+      "template_type": "table_format",
+      "plots": [
+        {
+          "parcel_id": "5839/1",
+          "area_m2": 5,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "5/408",
+          "area_m2": 5839,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "5839/2",
+          "area_m2": 5,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "5/384",
+          "area_m2": 5848,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "5/384",
+          "area_m2": 3042,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "3042/1",
+          "area_m2": 1,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/3",
+          "area_m2": 2715,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/3",
+          "area_m2": 2115,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "8/75",
+          "area_m2": 4,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/3",
+          "area_m2": 1,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/3",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "4717/1",
+          "area_m2": 4718,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "4718/1",
+          "area_m2": 4719,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        }
+      ]
+    },
+    "9657727": {
+      "offer_id": "9657727",
+      "timestamp": "2026-03-28T07:35:54.460459",
+      "total_price": 2.0,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657734": {
+      "offer_id": "9657734",
+      "timestamp": "2026-03-28T07:35:59.855390",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657736": {
+      "offer_id": "9657736",
+      "timestamp": "2026-03-28T07:36:05.350429",
+      "total_price": 10000.0,
+      "buyer_known": true,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657741": {
+      "offer_id": "9657741",
+      "timestamp": "2026-03-28T07:36:10.702100",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.2,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "236/36",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657744": {
+      "offer_id": "9657744",
+      "timestamp": "2026-03-28T07:36:16.070883",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.2,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "2/2",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657747": {
+      "offer_id": "9657747",
+      "timestamp": "2026-03-28T07:36:21.977532",
+      "total_price": 8800000.0,
+      "buyer_known": true,
+      "confidence_score": 0.45,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "287/2",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657748": {
+      "offer_id": "9657748",
+      "timestamp": "2026-03-28T07:36:27.590975",
+      "total_price": 42371.0,
+      "buyer_known": false,
+      "confidence_score": 0.35,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "1264/1",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657753": {
+      "offer_id": "9657753",
+      "timestamp": "2026-03-28T07:36:40.003626",
+      "total_price": 24149.0,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657754": {
+      "offer_id": "9657754",
+      "timestamp": "2026-03-28T07:36:46.771923",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657757": {
+      "offer_id": "9657757",
+      "timestamp": "2026-03-28T07:36:53.403577",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657775": {
+      "offer_id": "9657775",
+      "timestamp": "2026-03-28T07:36:58.396273",
+      "total_price": null,
+      "buyer_known": true,
+      "confidence_score": 0.35000000000000003,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "562/5",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657779": {
+      "offer_id": "9657779",
+      "timestamp": "2026-03-28T07:37:04.298675",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.55,
+      "template_type": "table_format",
+      "plots": [
+        {
+          "parcel_id": "44/22",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "540/4",
+          "area_m2": 5091,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 5,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "541/2",
+          "area_m2": 2123,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 5,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "542/14",
+          "area_m2": 1326,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 5,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "542/26",
+          "area_m2": 2220,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 5,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        }
+      ]
+    },
+    "9657780": {
+      "offer_id": "9657780",
+      "timestamp": "2026-03-28T07:37:09.806149",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657781": {
+      "offer_id": "9657781",
+      "timestamp": "2026-03-28T07:37:16.903585",
+      "total_price": 40150.0,
+      "buyer_known": false,
+      "confidence_score": 0.7,
+      "template_type": "table_format",
+      "plots": [
+        {
+          "parcel_id": "44/22",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1060/2",
+          "area_m2": 3926,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 1806,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1060/3",
+          "area_m2": 66,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 1806,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1060/4",
+          "area_m2": 2436,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 1,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1063/2",
+          "area_m2": 342,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 1806,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1063/3",
+          "area_m2": 642,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 40,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "513/3",
+          "area_m2": 508,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        }
+      ]
+    },
+    "9657782": {
+      "offer_id": "9657782",
+      "timestamp": "2026-03-28T07:37:22.650277",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657785": {
+      "offer_id": "9657785",
+      "timestamp": "2026-03-28T07:37:28.045693",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657786": {
+      "offer_id": "9657786",
+      "timestamp": "2026-03-28T07:37:33.275176",
+      "total_price": 2490.0,
+      "buyer_known": true,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657789": {
+      "offer_id": "9657789",
+      "timestamp": "2026-03-28T07:37:38.309086",
+      "total_price": 45000.0,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657790": {
+      "offer_id": "9657790",
+      "timestamp": "2026-03-28T07:37:43.722644",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657791": {
+      "offer_id": "9657791",
+      "timestamp": "2026-03-28T07:37:48.968304",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657795": {
+      "offer_id": "9657795",
+      "timestamp": "2026-03-28T07:37:55.167943",
+      "total_price": 112.5,
+      "buyer_known": false,
+      "confidence_score": 0.35,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "1093/16",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657796": {
+      "offer_id": "9657796",
+      "timestamp": "2026-03-28T07:38:00.228222",
+      "total_price": 20000.0,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657797": {
+      "offer_id": "9657797",
+      "timestamp": "2026-03-28T07:38:05.339172",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657804": {
+      "offer_id": "9657804",
+      "timestamp": "2026-03-28T07:38:10.429666",
+      "total_price": 6.0,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657805": {
+      "offer_id": "9657805",
+      "timestamp": "2026-03-28T07:38:17.678270",
+      "total_price": 2303.0,
+      "buyer_known": false,
+      "confidence_score": 0.4,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "44/22",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "513/3",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657806": {
+      "offer_id": "9657806",
+      "timestamp": "2026-03-28T07:38:24.761794",
+      "total_price": 66000.0,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657809": {
+      "offer_id": "9657809",
+      "timestamp": "2026-03-28T07:38:31.258933",
+      "total_price": null,
+      "buyer_known": true,
+      "confidence_score": 0.65,
+      "template_type": "table_format",
+      "plots": [
+        {
+          "parcel_id": "1/1",
+          "area_m2": 3,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "3/100",
+          "area_m2": 1,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/2",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 3,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "3/100",
+          "area_m2": 1,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/2",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 1026,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "3/100",
+          "area_m2": 1244,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        }
+      ]
+    },
+    "9657811": {
+      "offer_id": "9657811",
+      "timestamp": "2026-03-28T07:38:37.038566",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657816": {
+      "offer_id": "9657816",
+      "timestamp": "2026-03-28T07:38:42.273964",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657819": {
+      "offer_id": "9657819",
+      "timestamp": "2026-03-28T07:38:47.922536",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.25,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "2099/387",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "2099/569",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657824": {
+      "offer_id": "9657824",
+      "timestamp": "2026-03-28T07:38:54.387475",
+      "total_price": 2500.0,
+      "buyer_known": false,
+      "confidence_score": 0.4,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "44/22",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "1409/7",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "1519/2",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "513/3",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657829": {
+      "offer_id": "9657829",
+      "timestamp": "2026-03-28T07:39:00.800019",
+      "total_price": 19000.0,
+      "buyer_known": true,
+      "confidence_score": 0.45,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "87/1",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657830": {
+      "offer_id": "9657830",
+      "timestamp": "2026-03-28T07:39:06.499988",
+      "total_price": 90000.0,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657833": {
+      "offer_id": "9657833",
+      "timestamp": "2026-03-28T07:39:12.372966",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657836": {
+      "offer_id": "9657836",
+      "timestamp": "2026-03-28T07:39:18.719546",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.25,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "040/287",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "07/33",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657837": {
+      "offer_id": "9657837",
+      "timestamp": "2026-03-28T07:39:25.984842",
+      "total_price": null,
+      "buyer_known": true,
+      "confidence_score": 0.65,
+      "template_type": "table_format",
+      "plots": [
+        {
+          "parcel_id": "1/1",
+          "area_m2": 3,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "3/100",
+          "area_m2": 1,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1955/29",
+          "area_m2": 3,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "3/100",
+          "area_m2": 9,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 2,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        }
+      ]
+    },
+    "9657839": {
+      "offer_id": "9657839",
+      "timestamp": "2026-03-28T07:39:31.235914",
+      "total_price": 10149.0,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657842": {
+      "offer_id": "9657842",
+      "timestamp": "2026-03-28T07:41:23.631995",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657847": {
+      "offer_id": "9657847",
+      "timestamp": "2026-03-28T07:42:51.082867",
+      "total_price": 12898.6,
+      "buyer_known": false,
+      "confidence_score": 0.4,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "040/620",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "1050/1",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "1050/2",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657849": {
+      "offer_id": "9657849",
+      "timestamp": "2026-03-28T07:43:08.808532",
+      "total_price": 161196.0,
+      "buyer_known": false,
+      "confidence_score": 0.35,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "30/1",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
+    },
+    "9657856": {
+      "offer_id": "9657856",
+      "timestamp": "2026-03-28T07:43:30.044618",
+      "total_price": 15000.0,
+      "buyer_known": false,
+      "confidence_score": 0.7,
+      "template_type": "table_format",
+      "plots": [
+        {
+          "parcel_id": "347/2",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "8/3",
+          "area_m2": 1,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 1062,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "149/1",
+          "area_m2": 9,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "347/4",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "347/4",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "1/1",
+          "area_m2": 15,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        }
+      ]
+    },
+    "9657857": {
+      "offer_id": "9657857",
+      "timestamp": "2026-03-28T07:43:43.956632",
+      "total_price": 55000.0,
       "buyer_known": false,
       "confidence_score": 0.1,
       "template_type": "generic",
