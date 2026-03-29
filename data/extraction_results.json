@@ -2,8 +2,8 @@
   "metadata": {
     "created_at": "2025-12-29T00:23:03.803805",
     "migrated_from": "enhanced_extraction.json",
-    "total_extractions": 4979,
-    "last_updated": "2026-03-28T07:43:43.956700"
+    "total_extractions": 4982,
+    "last_updated": "2026-03-29T07:41:50.913270"
   },
   "extractions": {
     "9628572": {
@@ -160947,6 +160947,33 @@
       "offer_id": "9657857",
       "timestamp": "2026-03-28T07:43:43.956632",
       "total_price": 55000.0,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657840": {
+      "offer_id": "9657840",
+      "timestamp": "2026-03-29T07:41:40.795209",
+      "total_price": 3247.0,
+      "buyer_known": true,
+      "confidence_score": 0.1,
+      "template_type": "electronic_form",
+      "plots": []
+    },
+    "9657841": {
+      "offer_id": "9657841",
+      "timestamp": "2026-03-29T07:41:45.869043",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9657844": {
+      "offer_id": "9657844",
+      "timestamp": "2026-03-29T07:41:50.913193",
+      "total_price": 55.0,
       "buyer_known": false,
       "confidence_score": 0.1,
       "template_type": "generic",
