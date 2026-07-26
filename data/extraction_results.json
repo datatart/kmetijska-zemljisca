@@ -2,8 +2,8 @@
   "metadata": {
     "created_at": "2025-12-29T00:23:03.803805",
     "migrated_from": "enhanced_extraction.json",
-    "total_extractions": 9786,
-    "last_updated": "2026-07-25T09:14:20.406452"
+    "total_extractions": 9787,
+    "last_updated": "2026-07-26T09:46:25.144315"
   },
   "extractions": {
     "9628572": {
@@ -317127,6 +317127,30 @@
       "confidence_score": 0.1,
       "template_type": "generic",
       "plots": []
+    },
+    "9690235": {
+      "offer_id": "9690235",
+      "timestamp": "2026-07-26T09:46:25.144238",
+      "total_price": 500.0,
+      "buyer_known": true,
+      "confidence_score": 0.5,
+      "template_type": "generic",
+      "plots": [
+        {
+          "parcel_id": "79/7",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        },
+        {
+          "parcel_id": "73/7",
+          "area_m2": null,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.4
+        }
+      ]
     }
   }
 }
