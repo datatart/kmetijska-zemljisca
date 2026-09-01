@@ -2,8 +2,8 @@
   "metadata": {
     "created_at": "2025-12-29T00:23:03.803805",
     "migrated_from": "enhanced_extraction.json",
-    "total_extractions": 10913,
-    "last_updated": "2026-08-31T13:36:17.013850"
+    "total_extractions": 10916,
+    "last_updated": "2026-09-01T12:54:05.577666"
   },
   "extractions": {
     "9628572": {
@@ -350276,6 +350276,69 @@
           "confidence": 0.4
         }
       ]
+    },
+    "9699167": {
+      "offer_id": "9699167",
+      "timestamp": "2026-09-01T12:52:16.274916",
+      "total_price": 157000.0,
+      "buyer_known": false,
+      "confidence_score": 0.7,
+      "template_type": "table_format",
+      "plots": [
+        {
+          "parcel_id": "791/1",
+          "area_m2": 2353,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "792/2",
+          "area_m2": 2353,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "791/1",
+          "area_m2": 4,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "4/2",
+          "area_m2": 792,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        },
+        {
+          "parcel_id": "792/2",
+          "area_m2": 9,
+          "price_eur": null,
+          "share": "1/1",
+          "confidence": 0.6
+        }
+      ]
+    },
+    "9699170": {
+      "offer_id": "9699170",
+      "timestamp": "2026-09-01T12:52:20.952916",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
+    },
+    "9699217": {
+      "offer_id": "9699217",
+      "timestamp": "2026-09-01T12:53:10.373066",
+      "total_price": null,
+      "buyer_known": false,
+      "confidence_score": 0.1,
+      "template_type": "generic",
+      "plots": []
     }
   }
 }
